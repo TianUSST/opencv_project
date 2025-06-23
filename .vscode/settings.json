@@ -1,0 +1,9 @@
+{
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+  "files.associations": {
+    "iostream": "cpp"
+  },
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "C_Cpp.intelliSenseEngine": "default",
+  "editor.formatOnSave": false
+}

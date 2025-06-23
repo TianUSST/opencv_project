@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Project",
+      "type": "shell",
+      "command": "cmake -S . -B build && cmake --build build",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "编译整个 CMake 项目"
+    }
+  ]
+}

@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/vihyu/opencv_project/build/CMakeFiles /home/vihyu/opencv_project/build//CMakeFiles/progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	cd /home/vihyu/opencv_project/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/vihyu/opencv_project/build/CMakeFiles /home/vihyu/opencv_project/build/server//CMakeFiles/progress.marks
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/vihyu/opencv_project/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,31 +103,80 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/vihyu/opencv_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named server
+# Convenience name for target.
+server/CMakeFiles/server.dir/rule:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server/CMakeFiles/server.dir/rule
+.PHONY : server/CMakeFiles/server.dir/rule
 
-# Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server
+# Convenience name for target.
+server: server/CMakeFiles/server.dir/rule
 .PHONY : server
 
 # fast build rule for target.
 server/fast:
-	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/build
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/build
 .PHONY : server/fast
+
+serverMain.o: serverMain.cpp.o
+.PHONY : serverMain.o
+
+# target to build an object file
+serverMain.cpp.o:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/serverMain.cpp.o
+.PHONY : serverMain.cpp.o
+
+serverMain.i: serverMain.cpp.i
+.PHONY : serverMain.i
+
+# target to preprocess a source file
+serverMain.cpp.i:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/serverMain.cpp.i
+.PHONY : serverMain.cpp.i
+
+serverMain.s: serverMain.cpp.s
+.PHONY : serverMain.s
+
+# target to generate assembly for a file
+serverMain.cpp.s:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/serverMain.cpp.s
+.PHONY : serverMain.cpp.s
+
+tcp_server.o: tcp_server.cpp.o
+.PHONY : tcp_server.o
+
+# target to build an object file
+tcp_server.cpp.o:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/tcp_server.cpp.o
+.PHONY : tcp_server.cpp.o
+
+tcp_server.i: tcp_server.cpp.i
+.PHONY : tcp_server.i
+
+# target to preprocess a source file
+tcp_server.cpp.i:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/tcp_server.cpp.i
+.PHONY : tcp_server.cpp.i
+
+tcp_server.s: tcp_server.cpp.s
+.PHONY : tcp_server.s
+
+# target to generate assembly for a file
+tcp_server.cpp.s:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/tcp_server.cpp.s
+.PHONY : tcp_server.cpp.s
 
 # Help Target
 help:
@@ -138,6 +187,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... server"
+	@echo "... serverMain.o"
+	@echo "... serverMain.i"
+	@echo "... serverMain.s"
+	@echo "... tcp_server.o"
+	@echo "... tcp_server.i"
+	@echo "... tcp_server.s"
 .PHONY : help
 
 
@@ -149,6 +204,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/vihyu/opencv_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

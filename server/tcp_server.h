@@ -2,6 +2,7 @@
 #include<netinet/in.h>
 #include<thread>
 #include<vector>
+#include<opencv2/core.hpp>
 
 //封装服务器类
 class TcpServer
@@ -17,4 +18,14 @@ class TcpServer
         bool isRunning;
         void acceptConnections();
         void handleClient(int clnt_sock);
+
+        struct clientContext
+        {
+            std::vector<uchar> imageBuffer;
+            bool hasImage = false;
+        };
+
+        void handleImagePacket(int client_fd, struct clientContext& ctx);
+        void handleCommandPacket(int client_fd, struct clientContext& ctx);
+      
 };

@@ -4,6 +4,8 @@
 #include <cstring>
 #include <arpa/inet.h>
 #include"../utils/utils.h"
+#include<opencv2/core.hpp>
+#include<opencv2/highgui.hpp>
 
 //服务器类构造函数
 //创建套接字、绑定、监听
@@ -89,8 +91,13 @@ void TcpServer::acceptConnections()
 //对单个客户端进行处理，传入对应的客户端套接字
 void TcpServer::handleClient(int clnt_scok)
 {
+    //创建一个结构体，用于保存当前客户端的图片数据和缓冲区状态
+    clientContext ctx;
     //读取第一个字节
     uint8_t type;
+
+    while (true)
+    {
     int n = recv(clnt_scok, &type, 1, MSG_WAITALL);
     if(n!=1)
     {
@@ -101,13 +108,60 @@ void TcpServer::handleClient(int clnt_scok)
     switch (type)
     {
     case 0xA0:
-        handleImagePacket(clnt_scok);
+        handleImagePacket(clnt_scok,ctx);
         break;
     case 0xB0:
-        handleCommandPacket(clnt_scok);
+        handleCommandPacket(clnt_scok,ctx);
         break;
     default:
         std::cerr << "Unknown packet type received: 0x" << std::hex << (int)type << std::endl;
         break;
     }
+    }
+    close(clnt_scok);
+}
+
+//包的第一个字节为图片，接受后续图片数据
+void TcpServer::handleImagePacket(int clnt_sock, struct clientContext &context)
+{
+    //接受图片长度
+    uint32_t imgLength;
+    int n= recv(clnt_sock,&imgLength,sizeof(imgLength),MSG_WAITALL);
+    if(n!=4)
+    {
+        std::cerr<<"Image length read failed.\n";
+        return;
+    }
+    uint32_t imgLen=ntohl(imgLength);
+
+    //创建缓冲区接受图片数据
+    std::vector<uchar>buffer(imgLen);
+    //接收到的数据量，初始化为0
+    size_t received=0;
+    while(received<imgLen)
+    {
+        int bytes=recv(clnt_sock,buffer.data()+received,imgLen-received,0);
+        if(bytes<0)
+        {
+            std::cerr<<"Recving image body error.\n";
+            return;
+        }
+        received+=bytes;
+    }
+    //接收数据完毕，移入该客户端的具有的结构体中，保存图片数据
+    context.imageBuffer = std::move(buffer);
+    context.hasImage=true;
+    std::cout<<"Image received and stored.\n";
+    // //调试多线程图片的传输。。。。。。。。。。。。
+    // std::string filename = std::to_string(clnt_sock) + ".jpg";
+    // cv::Mat img = cv::imdecode(context.imageBuffer, cv::IMREAD_COLOR);
+    // cv::imwrite(filename, img);
+}
+
+void TcpServer::handleCommandPacket(int clnt_sock, clientContext &context)
+{
+    uint8_t cmd;
+    //接受命令
+    int n= recv(clnt_sock,&cmd,1,MSG_WAITALL);
+
 }

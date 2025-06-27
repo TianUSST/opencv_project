@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/vihyu/opencv_project/build/CMakeFiles /home/vihyu/opencv_project/build//CMakeFiles/progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	cd /home/vihyu/opencv_project/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/vihyu/opencv_project/build/CMakeFiles /home/vihyu/opencv_project/build/image_processing//CMakeFiles/progress.marks
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 image_processing/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/vihyu/opencv_project/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 image_processing/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,44 +103,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 image_processing/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 image_processing/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/vihyu/opencv_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named server
+# Convenience name for target.
+image_processing/CMakeFiles/imgProcessor.dir/rule:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 image_processing/CMakeFiles/imgProcessor.dir/rule
+.PHONY : image_processing/CMakeFiles/imgProcessor.dir/rule
 
-# Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 server
-.PHONY : server
-
-# fast build rule for target.
-server/fast:
-	$(MAKE) $(MAKESILENT) -f server/CMakeFiles/server.dir/build.make server/CMakeFiles/server.dir/build
-.PHONY : server/fast
-
-#=============================================================================
-# Target rules for targets named imgProcessor
-
-# Build rule for target.
-imgProcessor: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imgProcessor
+# Convenience name for target.
+imgProcessor: image_processing/CMakeFiles/imgProcessor.dir/rule
 .PHONY : imgProcessor
 
 # fast build rule for target.
 imgProcessor/fast:
-	$(MAKE) $(MAKESILENT) -f image_processing/CMakeFiles/imgProcessor.dir/build.make image_processing/CMakeFiles/imgProcessor.dir/build
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f image_processing/CMakeFiles/imgProcessor.dir/build.make image_processing/CMakeFiles/imgProcessor.dir/build
 .PHONY : imgProcessor/fast
+
+imageProcessor.o: imageProcessor.cpp.o
+.PHONY : imageProcessor.o
+
+# target to build an object file
+imageProcessor.cpp.o:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f image_processing/CMakeFiles/imgProcessor.dir/build.make image_processing/CMakeFiles/imgProcessor.dir/imageProcessor.cpp.o
+.PHONY : imageProcessor.cpp.o
+
+imageProcessor.i: imageProcessor.cpp.i
+.PHONY : imageProcessor.i
+
+# target to preprocess a source file
+imageProcessor.cpp.i:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f image_processing/CMakeFiles/imgProcessor.dir/build.make image_processing/CMakeFiles/imgProcessor.dir/imageProcessor.cpp.i
+.PHONY : imageProcessor.cpp.i
+
+imageProcessor.s: imageProcessor.cpp.s
+.PHONY : imageProcessor.s
+
+# target to generate assembly for a file
+imageProcessor.cpp.s:
+	cd /home/vihyu/opencv_project/build && $(MAKE) $(MAKESILENT) -f image_processing/CMakeFiles/imgProcessor.dir/build.make image_processing/CMakeFiles/imgProcessor.dir/imageProcessor.cpp.s
+.PHONY : imageProcessor.cpp.s
 
 # Help Target
 help:
@@ -151,7 +163,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... imgProcessor"
-	@echo "... server"
+	@echo "... imageProcessor.o"
+	@echo "... imageProcessor.i"
+	@echo "... imageProcessor.s"
 .PHONY : help
 
 
@@ -163,6 +177,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/vihyu/opencv_project/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

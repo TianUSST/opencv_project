@@ -1,2 +1,2 @@
-# Empty dependencies file for my_project.
+# Empty dependencies file for imgProcessor.
 # This may be replaced when dependencies are built.

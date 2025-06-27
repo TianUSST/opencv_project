@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /usr/include/opencv4
+CXX_INCLUDES = -I/home/vihyu/opencv_project/server -isystem /usr/include/opencv4
 
 CXX_FLAGS = -g -std=gnu++17
 

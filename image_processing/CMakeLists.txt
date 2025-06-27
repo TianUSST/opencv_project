@@ -2,9 +2,14 @@
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(imgProcessor
+# 添加 image_processing 模块的头文件目录
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(imgProcessor
     imageProcessor.cpp
 )
+
+
 
 target_link_libraries(imgProcessor ${OpenCV_LIBS})
 

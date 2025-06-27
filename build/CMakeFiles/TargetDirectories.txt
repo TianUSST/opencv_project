@@ -3,3 +3,6 @@
 /home/vihyu/opencv_project/build/server/CMakeFiles/server.dir
 /home/vihyu/opencv_project/build/server/CMakeFiles/edit_cache.dir
 /home/vihyu/opencv_project/build/server/CMakeFiles/rebuild_cache.dir
+/home/vihyu/opencv_project/build/image_processing/CMakeFiles/imgProcessor.dir
+/home/vihyu/opencv_project/build/image_processing/CMakeFiles/edit_cache.dir
+/home/vihyu/opencv_project/build/image_processing/CMakeFiles/rebuild_cache.dir

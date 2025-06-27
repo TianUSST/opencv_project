@@ -3,9 +3,9 @@
 #include <unistd.h>
 #include <cstring>
 #include <arpa/inet.h>
-#include"../utils/utils.h"
 #include<opencv2/core.hpp>
 #include<opencv2/highgui.hpp>
+#include"../image_processing/imageProcessor.h"
 
 //服务器类构造函数
 //创建套接字、绑定、监听
@@ -152,16 +152,68 @@ void TcpServer::handleImagePacket(int clnt_sock, struct clientContext &context)
     context.imageBuffer = std::move(buffer);
     context.hasImage=true;
     std::cout<<"Image received and stored.\n";
-    // //调试多线程图片的传输。。。。。。。。。。。。
-    // std::string filename = std::to_string(clnt_sock) + ".jpg";
-    // cv::Mat img = cv::imdecode(context.imageBuffer, cv::IMREAD_COLOR);
+    //解码保存到该线程的结构体
+    context.decodedImg = cv::imdecode(context.imageBuffer,cv::IMREAD_COLOR);
     // cv::imwrite(filename, img);
 }
 
 void TcpServer::handleCommandPacket(int clnt_sock, clientContext &context)
 {
-    uint8_t cmd;
-    //接受命令
-    int n= recv(clnt_sock,&cmd,1,MSG_WAITALL);
+    //没有图片，无法接受命令
+    if(context.hasImage==0)
+        std::cerr<<"No image,can not receive command.\n";
+    //接受四个字节作为长度，来接受后续命令类型和可变参数
+    uint32_t cmd_len=0;
+    int n= recv(clnt_sock,&cmd_len,sizeof(cmd_len),MSG_WAITALL);
+    if(n!=4)
+    {
+        std::cerr<<"Image length read failed.\n";
+        return;
+    }
+    //最大字节保护
+    uint32_t cmd_length=ntohl(cmd_len);
+    if(cmd_length==0 || cmd_length>2048)
+    {
+        std::cerr<<"Invalid command length: "<<cmd_length<<std::endl;
+        return;
+    }
+    // //根据获取的长度创建vector，接受后续指令
+    // std::vector<std::string> command;
+    // //根据大小重新更改
+    // command.resize(cmd_length);
 
+    std::string rawCommand(cmd_length, 0);
+
+    size_t received=0;
+    while(received<cmd_length)
+    {
+        int bytes=recv(clnt_sock, &rawCommand[received], cmd_length - received, 0);
+        if(bytes<0)
+        {
+            std::cerr<<"Recving command body error.\n";
+            return;
+        }
+        received+=bytes;
+    }
+    //调试长度信息
+    std::cout<<"收到长度: "<<cmd_length<<std::endl;
+    //转换格式，传入图像处理模块
+    imageProcessor::process(context.decodedImg,rawCommand);
+    
+
+    
+}
+
+bool TcpServer::readNBytes(int sock,uint32_t* buffer,size_t n)
+{
+    size_t total=0;//初始化为0
+    while(total<n)
+    {
+        ssize_t bytes = read(sock,&buffer+total,n-total);
+        //没读完，返回false
+        if(bytes<=0)
+            return false;
+        total+=bytes;
+    }
+    return true;
 }

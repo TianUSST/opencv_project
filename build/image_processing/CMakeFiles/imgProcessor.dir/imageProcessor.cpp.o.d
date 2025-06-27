@@ -1,6 +1,7 @@
-CMakeFiles/my_project.dir/main.cpp.o: /home/vihyu/opencv_project/main.cpp \
- /usr/include/stdc-predef.h /usr/include/opencv4/opencv2/opencv.hpp \
- /usr/include/opencv4/opencv2/opencv_modules.hpp \
+image_processing/CMakeFiles/imgProcessor.dir/imageProcessor.cpp.o: \
+ /home/vihyu/opencv_project/image_processing/imageProcessor.cpp \
+ /usr/include/stdc-predef.h \
+ /home/vihyu/opencv_project/image_processing/imageProcessor.h \
  /usr/include/opencv4/opencv2/core.hpp \
  /usr/include/opencv4/opencv2/core/cvdef.h \
  /usr/include/opencv4/opencv2/core/version.hpp /usr/include/c++/13/limits \
@@ -80,7 +81,9 @@ CMakeFiles/my_project.dir/main.cpp.o: /home/vihyu/opencv_project/main.cpp \
  /usr/include/c++/13/bits/ptr_traits.h /usr/include/c++/13/debug/debug.h \
  /usr/include/c++/13/bits/predefined_ops.h /usr/include/c++/13/bit \
  /usr/include/c++/13/bits/range_access.h \
- /usr/include/opencv4/opencv2/core/base.hpp /usr/include/c++/13/climits \
+ /usr/include/opencv4/opencv2/core/base.hpp \
+ /usr/include/opencv4/opencv2/opencv_modules.hpp \
+ /usr/include/c++/13/climits \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h \
  /usr/include/limits.h /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
@@ -256,6 +259,7 @@ CMakeFiles/my_project.dir/main.cpp.o: /home/vihyu/opencv_project/main.cpp \
  /usr/include/opencv4/opencv2/core/optim.hpp \
  /usr/include/opencv4/opencv2/core/ovx.hpp \
  /usr/include/opencv4/opencv2/core/cvdef.h \
+ /usr/include/opencv4/opencv2/opencv.hpp \
  /usr/include/opencv4/opencv2/calib3d.hpp \
  /usr/include/opencv4/opencv2/features2d.hpp \
  /usr/include/opencv4/opencv2/flann/miniflann.hpp \

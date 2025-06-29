@@ -1,37 +1,11 @@
-📸 Qt-OpenCV 图像远程处理系统
+📸 Qt-OpenCV 图像远程处理系统(服务器端)
 基于 Qt 客户端和 Linux OpenCV 服务器的远程图像处理系统，支持多线程 TCP 通信、图像上传与处理命令发送、结果回传与展示。
 
-🧩 项目结构
-bash
-复制
-编辑
-opencv_remote_processor/
-├── client/            # Windows 客户端（基于 Qt 开发）
-│   ├── mainwindow.ui
-│   ├── mainwindow.cpp/h
-│   └── ...
-│
-├── server/            # Linux 服务器（基于 C++/OpenCV）
-│   ├── tcp_server.cpp/h
-│   ├── imageProcessor.cpp/h
-│   └── ...
-│
-├── image_processing/  # 图像处理模块（支持扩展）
-│   └── imageProcessor.cpp/h
-│
-├── cmake/             # CMake 构建配置
-│   └── CMakeLists.txt
-│
-├── docs/              # 项目文档
-│   ├── 通信协议说明.md
-│   ├── 使用指南.md
-│   └── 项目展示截图/
-│
-└── README.md
 🚀 功能简介
+
 ✅ Qt 客户端支持图像选择、上传、指令发送
 
-✅ 支持多种图像处理命令（如：灰度化、模糊、边缘提取等）
+✅ 支持多种图像处理命令（如：灰度化、模糊、边缘提取等），方便在服务器端集成opencv相关算法
 
 ✅ 客户端接收并显示处理后的图像
 
@@ -66,10 +40,14 @@ make
 
 # 启动服务端程序（默认监听 6666 端口）
 ./server
+
 📡 通信协议
+
 字段	长度	说明
+
 type	1 byte	0xA0 表示图片, 0xB0 表示命令
 length	4 bytes	后续 payload 的长度（大端序）
+
 payload	可变	图片（压缩图像）或 UTF-8 命令
 
 示例：
@@ -79,6 +57,7 @@ payload	可变	图片（压缩图像）或 UTF-8 命令
 图片包：0xA0 + 00 01 3A B4 + JPEG图像二进制
 
 🧪 支持的图像处理命令（持续扩展）
+
 grayscale
 
 blur|ksize

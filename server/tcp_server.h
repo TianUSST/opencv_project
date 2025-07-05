@@ -27,8 +27,9 @@ class TcpServer
             cv::Mat decodedImg;
         };
 
-        void handleImagePacket(int client_fd, struct clientContext& ctx);
-        void handleCommandPacket(int client_fd, struct clientContext& ctx);
+        void handleImagePacket(int client_fd, struct clientContext& ctx);//接收图片
+        void handleCommandPacket(int client_fd, struct clientContext& ctx);//接收命令，开始处理
+        void sendProcessedImage(int client_fd,const cv::Mat &image);//发送回服务器
 
         bool readNBytes(int sock,uint32_t* buffer,size_t n);//从sock读取n个字节，放入buffer缓冲区
       

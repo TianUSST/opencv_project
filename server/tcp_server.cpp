@@ -198,10 +198,54 @@ void TcpServer::handleCommandPacket(int clnt_sock, clientContext &context)
     //调试长度信息
     std::cout<<"收到长度: "<<cmd_length<<std::endl;
     //转换格式，传入图像处理模块
-    imageProcessor::process(context.decodedImg,rawCommand);
-    
+    cv::Mat result;
+    result=imageProcessor::process(context.decodedImg,rawCommand);
+    sendProcessedImage(clnt_sock,result);
+    return;
+}
 
-    
+void TcpServer::sendProcessedImage(int clnt_sock,const cv::Mat & image)
+{
+    //1，编码为jpg格式
+    std::vector<uchar> encodeImage;//存放编码好的数据
+    std::vector<int>params = {cv::IMWRITE_JPEG_QUALITY,90};//vector类型保存编码参数
+    if(!cv::imencode(".jpg",image,encodeImage,params))
+    {
+        std::cerr<<"Return image endode error.\n";
+        return;
+    }
+
+    //2、准备发送数据
+    uint8_t type=0xC0;//标识为传回图片
+    uint32_t retImgLength=htonl(static_cast<uint32_t>(encodeImage.size()));//大小
+
+    //3、发包头,1个字节
+    if(send(clnt_sock,&type,1,0)!=1)
+    {
+        std::cerr<<"Send response type error.\n";
+        return;
+    }
+        //发长度，4个字节
+    if(send(clnt_sock,&retImgLength,4,0)!=4)
+    {
+        std::cerr<<"Send response length error.\n";
+        return;
+    }
+
+    //4、发送图像数据，防止粘包
+    size_t totalSended=0;
+    while(totalSended<encodeImage.size())
+    {
+        int n = send(clnt_sock,encodeImage.data()+totalSended,encodeImage.size()-totalSended,0);
+        if(n<=0)
+        {
+            //判断发送成功
+            std::cerr<<"Sending image data error .\n ";
+            return;
+        }
+        totalSended+=n;
+    }
+    std::cout<<"Sending processed image success!\n";
 }
 
 bool TcpServer::readNBytes(int sock,uint32_t* buffer,size_t n)
